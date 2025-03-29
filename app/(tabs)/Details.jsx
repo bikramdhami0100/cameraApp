@@ -6,10 +6,8 @@ import { useLocalSearchParams } from 'expo-router';
 export default function Details(){
   const [albums, setAlbums] = useState(null);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-  const params=useLocalSearchParams();
-  useEffect(()=>{
-     getAlbums();
-  },[params?.id])
+   const params=useLocalSearchParams();
+  // console.log(params,"this is data");
   async function getAlbums() {
     if (permissionResponse.status !== 'granted') {
       await requestPermission();
@@ -24,7 +22,7 @@ getAlbums();
     <SafeAreaView style={styles.container}>
      
       <ScrollView>
-        {albums && albums.map((album) => <AlbumEntry album={album} />)}
+        {albums && albums.map((album) => <AlbumEntry album={album}  />)}
       </ScrollView>
     </SafeAreaView>
   );
@@ -32,7 +30,6 @@ getAlbums();
 
 function AlbumEntry({ album }) {
   const [assets, setAssets] = useState([]);
-  const params=useLocalSearchParams();
  
   useEffect(() => {
     async function getAlbumAssets() {
@@ -40,7 +37,7 @@ function AlbumEntry({ album }) {
       setAssets(albumAssets.assets);
     }
     getAlbumAssets();
-  }, [params?.id]);
+  }, []);
 
   // console.log(params,"data")
   return (

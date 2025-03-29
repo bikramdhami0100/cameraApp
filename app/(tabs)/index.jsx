@@ -2,9 +2,10 @@ import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { useState,useCallback,useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
-import { useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 export default function App() {
   const router=useRouter();
+  const navigation=useNavigation();
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [albums, setAlbums] = useState(null);
@@ -51,7 +52,8 @@ export default function App() {
       const asset = await MediaLibrary.createAssetAsync(photo?.uri);
         console.log(asset,"photos")
         if(asset){
-          router.push("Details",{id:JSON.stringify(asset)})
+          router.push("Details",{ id:JSON.stringify(asset)})
+          // navigation.navigate.
         }
     }
   };
